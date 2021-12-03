@@ -4,6 +4,7 @@ pub fn get_puzzle_function(
 ) -> Option<fn(Vec<String>) -> Result<i64, String>> {
     match (day, puzzle) {
         (1, 1) => Some(crate::lib::day_01::puzzle_01),
+        (1, 2) => Some(crate::lib::day_01::puzzle_02),
         _ => None,
     }
 }
