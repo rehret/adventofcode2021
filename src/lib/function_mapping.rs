@@ -5,6 +5,9 @@ pub fn get_puzzle_function(
     match (day, puzzle) {
         (1, 1) => Some(crate::lib::day_01::puzzle_01),
         (1, 2) => Some(crate::lib::day_01::puzzle_02),
+
+        (2, 1) => Some(crate::lib::day_02::puzzle_01),
+
         _ => None,
     }
 }
