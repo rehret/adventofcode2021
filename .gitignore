@@ -1,5 +1,8 @@
 # IDE configuration
 .idea/
 
+# Puzzle Input
+input/
+
 # Build output
 /target
