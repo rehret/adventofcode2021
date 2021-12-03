@@ -7,6 +7,7 @@ pub fn get_puzzle_function(
         (1, 2) => Some(crate::lib::day_01::puzzle_02),
 
         (2, 1) => Some(crate::lib::day_02::puzzle_01),
+        (2, 2) => Some(crate::lib::day_02::puzzle_02),
 
         _ => None,
     }
