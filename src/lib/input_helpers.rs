@@ -19,7 +19,7 @@ pub fn get_contents_of_file(path: &str) -> Vec<String> {
             break;
         }
 
-        lines.push(line);
+        lines.push(line.trim().to_string());
     }
 
     lines
