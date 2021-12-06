@@ -25,13 +25,20 @@ pub fn parse_input(input: Vec<String>) -> Result<(Vec<u32>, Vec<BingoBoard>), St
     Ok((random_values, boards))
 }
 
-pub fn mark_boards_and_check_for_winner(boards: &mut Vec<BingoBoard>, value: u32) -> Option<usize> {
-    let mut winning_board_index: Option<usize> = None;
-    for (board_index, board) in boards.iter_mut().enumerate() {
-        if board.mark(value) && board.is_winner() && winning_board_index == None {
-            winning_board_index = Some(board_index);
+pub fn mark_boards_and_check_for_winners(
+    boards: Vec<BingoBoard>,
+    value: u32,
+) -> (Vec<BingoBoard>, Vec<BingoBoard>) {
+    let mut winning_boards: Vec<BingoBoard> = Vec::default();
+    let mut remaining_boards: Vec<BingoBoard> = Vec::default();
+
+    for mut board in boards {
+        if board.mark(value) && board.is_winner() {
+            winning_boards.push(board);
+        } else {
+            remaining_boards.push(board);
         }
     }
 
-    winning_board_index
+    (winning_boards, remaining_boards)
 }

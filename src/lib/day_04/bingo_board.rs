@@ -3,7 +3,7 @@ use regex::Regex;
 
 pub const BOARD_SIZE: usize = 5;
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct BingoBoard {
     board: [[BingoSpace; BOARD_SIZE]; BOARD_SIZE],
 }
@@ -11,13 +11,10 @@ pub struct BingoBoard {
 impl BingoBoard {
     pub fn mark(&mut self, value: u32) -> bool {
         let mut space_was_marked = false;
-        for i in 0..BOARD_SIZE {
-            for j in 0..BOARD_SIZE {
-                let space = &mut self.board[i][j];
-                if space.value == value {
-                    space.is_marked = true;
-                    space_was_marked = true;
-                }
+        for space in self.board.iter_mut().flat_map(|row| row) {
+            if space.value == value {
+                space.is_marked = true;
+                space_was_marked = true;
             }
         }
 
@@ -25,26 +22,18 @@ impl BingoBoard {
     }
 
     pub fn is_winner(&self) -> bool {
-        if self
-            .board
-            .iter()
-            .any(|row| row.iter().all(|col| col.is_marked))
-        {
-            return true;
-        }
+        // collection of rows
+        let mut cardinal_collections: Vec<Vec<BingoSpace>> =
+            self.board.iter().map(|row| row.to_vec()).collect();
 
+        // collection of columns
         for col_index in 0..BOARD_SIZE {
-            if self
-                .board
-                .iter()
-                .map(|row| row[col_index])
-                .all(|space| space.is_marked)
-            {
-                return true;
-            }
+            cardinal_collections.push(self.board.iter().map(|row| row[col_index]).collect())
         }
 
-        false
+        cardinal_collections
+            .iter()
+            .any(|collection| collection.iter().all(|space| space.is_marked))
     }
 
     pub fn get_sum_of_unmarked_spaces(&self) -> u32 {

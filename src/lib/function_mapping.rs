@@ -13,6 +13,7 @@ pub fn get_puzzle_function(
         (3, 2) => Some(crate::lib::day_03::puzzle_02),
 
         (4, 1) => Some(crate::lib::day_04::puzzle_01),
+        (4, 2) => Some(crate::lib::day_04::puzzle_02),
 
         _ => None,
     }
